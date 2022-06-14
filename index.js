@@ -1,6 +1,7 @@
 const express = require('express');
 const config = require('./config/config');
 const expressConfig = require('./config/express');
+const routes = require('./routes');
 
 const app = express();
 expressConfig(app);
@@ -18,13 +19,16 @@ expressConfig(app);
 // горното цялото се изнася във файла express.js
 
 
-app.get('/', (req, res) => {
-    // console.log('It`s working');
+// app.get('/', (req, res) => {
+//     // console.log('It`s working');
 
-    res.render('home', {layout: false})
-    // това {layout: false} не дава на хендълбарс да си търси папка layouts
-});
+//     res.render('home', {layout: false})
+//     // това {layout: false} не дава на хендълбарс да си търси папка layouts
+// });
+// // горното го изнасяме в router.js
 
+app.use(routes);
+// включване на рекуайрваните раутери
 
 app.listen(config.PORT, () => console.log(`Server is running on port ${config.PORT}...`));
 // стартира се на съответния порт
