@@ -1,0 +1,28 @@
+{
+  "name": "cubicle-06.2022_07.workshop_express_js_and_templating",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "SET NODE_ENV=development && nodemon ./index.js",
+    "prod": "SET NODE_ENV=production && node ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sbabukov/cubicle-06.2022.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sbabukov/cubicle-06.2022/issues"
+  },
+  "homepage": "https://github.com/sbabukov/cubicle-06.2022#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
