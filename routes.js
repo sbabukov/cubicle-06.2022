@@ -5,12 +5,12 @@ const router = Router();
 const productController = require('./controllers/productController');
 // импортваме контролерите
 
-const aboutController = require('./controllers/aboutController');
+const homeController = require('./controllers/homeController');
 
-router.use('/', productController);
+router.use('/products', productController);
 // за всички заявки, които са на / нека productController се погрижи
 // тук се използват раутерите от productController
-router.use('/about', aboutController);
+router.use('/', homeController);
 
 router.get('*', (req, res) => {
     res.render('404');

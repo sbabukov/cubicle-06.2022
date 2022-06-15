@@ -4,11 +4,12 @@ const router = Router();
 
  
 router.get('/', (req, res) => {
-    res.render('home');
+    res.render('home', {title: 'Browse'});
 });
+// това: {title: 'Browse'} указва тайтъл на педжа какъв да е
 
 router.get('/create', (req, res) => {
-    res.render('create');
+    res.render('create', {title: 'Create'});
 
 });
 
