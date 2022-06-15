@@ -14,7 +14,8 @@ router.get('/create', (req, res) => {
 
 router.post('/create', (req, res) => {
     console.log(req.body);
-    res.send('created');
+    res.redirect('/products');
+    // редиректва към хоумпейджа за да видим създадения пейдж
 })
 
 router.get('/details/:productId', (req, res) => {
