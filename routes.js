@@ -12,6 +12,11 @@ router.use('/', productController);
 // тук се използват раутерите от productController
 router.use('/about', aboutController);
 
+router.get('*', (req, res) => {
+    res.render('404', {layout: false});
+});
+// за всеки друг раут да зарежда 404 хендълбарс
+
 
 // router.get('/', productController.index);
 // router.get('/create', productController.create);
