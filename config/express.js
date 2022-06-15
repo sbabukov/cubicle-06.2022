@@ -12,6 +12,11 @@ function setupExpress(app) {
     
     app.use(express.static('public'))
     // сетъпваме папка public
+
+    app.use(express.urlencoded({
+        extended: true
+    }));
+    // този мидълуер чете бодито от формата и го парсва
 };
 // функция която очаква да й се подаде арр и да конфигурира
 
