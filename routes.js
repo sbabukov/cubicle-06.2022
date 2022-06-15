@@ -13,7 +13,7 @@ router.use('/', productController);
 router.use('/about', aboutController);
 
 router.get('*', (req, res) => {
-    res.render('404', {layout: false});
+    res.render('404');
 });
 // за всеки друг раут да зарежда 404 хендълбарс
 
