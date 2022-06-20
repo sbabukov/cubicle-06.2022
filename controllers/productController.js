@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const router = Router();
+const productService = require('../services/productService');
 
 
  
@@ -13,7 +14,15 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/create', (req, res) => {
-    console.log(req.body);
+
+    // vaidation imput
+    // задължително трябва да се валидират данните от формата
+    
+    productService.create(req.body);
+
+
+
+    // console.log(req.body);
     res.redirect('/products');
     // редиректва към хоумпейджа за да видим създадения пейдж
 })
