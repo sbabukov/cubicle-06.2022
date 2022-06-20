@@ -21,7 +21,7 @@ function create(data) {
     // създаване на нов кюб в пост заявката, като uniqid() се подава като функция, която си се изпълнява, другите параметри си ги взима от рек-бодито
 
     productsData.push(cube);
-    // пушва обекта cube в масива productsData
+    // пушва обекта cube в общия масив productsData
 
     fs.writeFile(__dirname + '/../config/products.json',JSON.stringify(productsData), (err) => {
         // JSON.stringify(productsData) обръща го в стринг и го записва във файла
@@ -36,5 +36,6 @@ function create(data) {
 };
 
 module.exports = {
-    create
+    create,
+    getAll
 };
