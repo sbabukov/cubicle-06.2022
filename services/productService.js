@@ -1,12 +1,33 @@
 const Cube = require('../models/Cube');
 const uniqid = require('uniqid');
-const fs = require('fs');
+// const fs = require('fs');
 const path = require('path');
 const productsData = require('../config/products.json');
+const fs = require('fs/promises');
+const { search } = require('../controllers/productController');
+// за да работим с промис вариянт за записването на файла
 
 
-function getAll() {
-    return productsData;
+function getAll(query) {
+    
+    let result = productsData;
+    if (query.search) {
+        result = result.filter(x => x.name.toLowerCase().includes(query.search))
+        // ако е позитивна стойност, има го, 
+    }
+
+    if (query.from){
+        result = result.filter(x => Number(x.level) >= query.from)
+        // куери стринга в браузера
+    }
+
+    if (query.to){
+        result = result.filter(x => Number(x.level) <= query.to)
+        // куери стринга в браузера
+    }
+    // всичките ифове за сърч функцията
+    
+    return result;
 }
 
 function getOne(id) {
@@ -30,16 +51,21 @@ function create(data, callback) {
 
     productsData.push(cube);
     // пушва обекта cube в общия масив productsData
-     
 
-    fs.writeFile(path.join(__dirname, '/../config/products.json'), 
-    JSON.stringify(productsData), 
-    callback
-        // JSON.stringify(productsData) обръща го в стринг и го записва във файла
-        
-    );
+        // вариант с колбек
+    // fs.writeFile(path.join(__dirname, '/../config/products.json'),
+    //     JSON.stringify(productsData),
+    //     callback
+    //     // JSON.stringify(productsData) обръща го в стринг и го записва във файла
+
+    // );
     // тук записва файла с новите кубове
 
+    return fs.writeFile(
+        path.join(__dirname, '/../config/products.json'),
+        JSON.stringify(productsData),
+    )
+    // слагаме ретърн, защото fs.writeFile връща промис
 };
 
 module.exports = {

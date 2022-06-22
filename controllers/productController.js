@@ -7,8 +7,10 @@ const {validateProduct} = require('./helpers/productHelps')
 
 
 router.get('/', (req, res) => {
+    // console.log(req.query);
 
-    let products = productService.getAll();
+    let products = productService.getAll(req.query);
+    // на гетоул се подава req.query, което куерито от браузера за да се направи сърч функцията
     // взима всичките продукти от сървиса и ги подаваме долу (products)
     res.render('home', { title: 'Browse', products });
 
@@ -28,17 +30,24 @@ router.post('/create', validateProduct, (req, res) => {
     // задължително трябва да се валидират данните от формата
     // validateProduct е мидълуер за валидиране
 
-    productService.create(req.body, (err) => {
-        if (err) {
-            return res.status(500).end();
-        };
-
-        res.redirect('/products');
+    
+    
+    // productService.create(req.body, (err) => {
+        // if (err) {
+        //     return res.status(500).end();
+        // };
+        // решаваме с колбек варианта
+        // res.redirect('/products');
         // редиректва към хоумпейджа за да видим създадения пейдж
-    });
+    // });
     // криейтва кубчето по модела cube.js, взима данните от рек-бодито
     // този (err) е заради колбека във функцията криейт
 
+    productService.create(req.body)
+        .then(()=> res.redirect('/products'))
+        .catch(() => res.status(500).end())
+
+    // вариант с промиси
 
     // console.log(req.body);
 })
