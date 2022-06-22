@@ -17,7 +17,7 @@ function getOne(id) {
 };
 
 
-function create(data) {
+function create(data, callback) {
     let cube = new Cube(
         uniqid(),
         data.name,
@@ -26,20 +26,18 @@ function create(data) {
         data.difficultyLevel);
 
     // създаване на нов кюб в пост заявката, като uniqid() се подава като функция, която си се изпълнява, другите параметри си ги взима от рек-бодито
+    // слагаме един колбек, защото криейт е асинхронна функция
 
     productsData.push(cube);
     // пушва обекта cube в общия масив productsData
+     
 
-       
-
-    fs.writeFile(path.join(__dirname, '/../config/products.json'), JSON.stringify(productsData), (err) => {
+    fs.writeFile(path.join(__dirname, '/../config/products.json'), 
+    JSON.stringify(productsData), 
+    callback
         // JSON.stringify(productsData) обръща го в стринг и го записва във файла
-        if (err) {
-            console.log('Some error' + err);
-            return;
-        };
-
-    });
+        
+    );
     // тук записва файла с новите кубове
 
 };

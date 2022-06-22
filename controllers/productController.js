@@ -28,14 +28,19 @@ router.post('/create', validateProduct, (req, res) => {
     // задължително трябва да се валидират данните от формата
     // validateProduct е мидълуер за валидиране
 
-    productService.create(req.body);
-    // криейтва кубчето по модела cube.js, взима данните от рек-бодито
+    productService.create(req.body, (err) => {
+        if (err) {
+            return res.status(500).end();
+        };
 
+        res.redirect('/products');
+        // редиректва към хоумпейджа за да видим създадения пейдж
+    });
+    // криейтва кубчето по модела cube.js, взима данните от рек-бодито
+    // този (err) е заради колбека във функцията криейт
 
 
     // console.log(req.body);
-    res.redirect('/products');
-    // редиректва към хоумпейджа за да видим създадения пейдж
 })
 
 router.get('/details/:productId', (req, res) => {
