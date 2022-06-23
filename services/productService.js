@@ -1,44 +1,47 @@
 const Cube = require('../models/Cube');
 const uniqid = require('uniqid');
 // const fs = require('fs');
-const path = require('path');
-const productsData = require('../config/products.json');
-const fs = require('fs/promises');
+
 const { search } = require('../controllers/productController');
 // за да работим с промис вариянт за записването на файла
+
+const productData = require('../data/productData')
+
+
 
 
 function getAll(query) {
     
-    let result = productsData;
+    let products = productData.getAll();
     if (query.search) {
-        result = result.filter(x => x.name.toLowerCase().includes(query.search))
+        products = products.filter(x => x.name.toLowerCase().includes(query.search))
         // ако е позитивна стойност, има го, 
     }
 
     if (query.from){
-        result = result.filter(x => Number(x.level) >= query.from)
+        products = products.filter(x => Number(x.level) >= query.from)
         // куери стринга в браузера
     }
 
     if (query.to){
-        result = result.filter(x => Number(x.level) <= query.to)
+        products = products.filter(x => Number(x.level) <= query.to)
         // куери стринга в браузера
     }
     // всичките ифове за сърч функцията
-    
-    return result;
+
+    return products;
 }
 
 function getOne(id) {
-    return productsData.find(x => x.id == id);
+    
+    return productData.getOne(id);
     // x => x.id == id сърч предикат да намира id
     // намира конкретния куб и го връща
 
 };
 
 
-function create(data, callback) {
+function create(data) {
     let cube = new Cube(
         uniqid(),
         data.name,
@@ -49,7 +52,7 @@ function create(data, callback) {
     // създаване на нов кюб в пост заявката, като uniqid() се подава като функция, която си се изпълнява, другите параметри си ги взима от рек-бодито
     // слагаме един колбек, защото криейт е асинхронна функция
 
-    productsData.push(cube);
+    // productsData.push(cube);
     // пушва обекта cube в общия масив productsData
 
         // вариант с колбек
@@ -61,10 +64,7 @@ function create(data, callback) {
     // );
     // тук записва файла с новите кубове
 
-    return fs.writeFile(
-        path.join(__dirname, '/../config/products.json'),
-        JSON.stringify(productsData),
-    )
+    return productData.create(cube)
     // слагаме ретърн, защото fs.writeFile връща промис
 };
 
